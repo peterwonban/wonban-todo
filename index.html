@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>매일루틴</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <div class="app-header">
+      <div class="app-title">할 일 달력</div>
+      <div class="app-date" id="today"></div>
+    </div>
+
+    <div class="calendar-header">
+      <button class="month-nav" id="prev-month">&lt;</button>
+      <select id="year-select" class="year-select"></select>
+      <select id="month-select" class="month-select"></select>
+      <button class="month-nav" id="next-month">&gt;</button>
+    </div>
+
+    <div class="selected-date-row">
+      <span id="selected-date-text"></span>
+    </div>
+
+    <form class="input-row" id="todo-form">
+      <input
+        type="text"
+        id="todo-input"
+        placeholder="선택한 날짜에 추가할 할 일을 입력하세요"
+      />
+      <button id="add-btn" type="submit">추가</button>
+    </form>
+
+    <div class="calendar">
+      <div class="calendar-weekdays">
+        <div>일</div>
+        <div>월</div>
+        <div>화</div>
+        <div>수</div>
+        <div>목</div>
+        <div>금</div>
+        <div>토</div>
+      </div>
+      <div class="calendar-grid" id="calendar-grid"></div>
+    </div>
+  </div>
+
+  <!-- ES 모듈로 자바스크립트 파일 사용 (Firebase import 가능) -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>
+
+
+
