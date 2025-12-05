@@ -186,14 +186,9 @@ async function addTodo() {
     const newRef = push(todosRef);
     await set(newRef, newTodoData);
 
-    // 로컬 상태에도 반영 (Firebase에서 생성된 key를 id로 사용)
-    todos.push({
-      id: newRef.key,
-      ...newTodoData,
-    });
-
+    // 로컬 상태 업데이트는 Firebase의 onValue 콜백에서 처리되므로 여기서는 제거
+    // inputEl만 초기화 (renderCalendar는 onValue 콜백에서 자동으로 호출됨)
     inputEl.value = "";
-    renderCalendar();
   } catch (error) {
     console.error("Firebase에 할 일을 추가하는 중 오류:", error);
     alert("할 일을 저장하는 중 오류가 발생했습니다. 콘솔을 확인해 주세요.");
@@ -210,10 +205,7 @@ async function toggleTodo(id) {
     const todoRef = ref(db, `todos/${id}`);
     await update(todoRef, { completed: newCompleted });
 
-    todos = todos.map((t) =>
-      t.id === id ? { ...t, completed: newCompleted } : t
-    );
-    renderCalendar();
+    // 로컬 상태 업데이트는 Firebase의 onValue 콜백에서 처리됨
   } catch (error) {
     console.error("Firebase에서 완료 상태를 변경하는 중 오류:", error);
     alert("완료 상태를 변경하는 중 오류가 발생했습니다. 콘솔을 확인해 주세요.");
@@ -234,11 +226,7 @@ async function editTodo(id) {
     const todoRef = ref(db, `todos/${id}`);
     await update(todoRef, { text: trimmed });
 
-    // 로컬 상태도 동기화
-    todos = todos.map((t) =>
-      t.id === id ? { ...t, text: trimmed } : t
-    );
-    renderCalendar();
+    // 로컬 상태 업데이트는 Firebase의 onValue 콜백에서 처리됨
   } catch (error) {
     console.error("Firebase에서 할 일을 수정하는 중 오류:", error);
     alert("할 일을 수정하는 중 오류가 발생했습니다. 콘솔을 확인해 주세요.");
@@ -253,9 +241,7 @@ async function deleteTodo(id) {
     const todoRef = ref(db, `todos/${id}`);
     await remove(todoRef);
 
-    // 로컬 상태에서도 삭제
-    todos = todos.filter((t) => t.id !== id);
-    renderCalendar();
+    // 로컬 상태 업데이트는 Firebase의 onValue 콜백에서 처리됨
   } catch (error) {
     console.error("Firebase에서 할 일을 삭제하는 중 오류:", error);
     alert("할 일을 삭제하는 중 오류가 발생했습니다. 콘솔을 확인해 주세요.");
