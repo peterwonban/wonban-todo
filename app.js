@@ -152,7 +152,17 @@ function renderCalendar() {
 
     cell.appendChild(todosContainer);
 
-    cell.addEventListener("click", () => {
+    cell.addEventListener("click", (e) => {
+      // 체크박스, 버튼, 또는 그 부모 요소를 클릭한 경우는 날짜 선택하지 않음
+      const target = e.target;
+      if (
+        target.type === "checkbox" ||
+        target.tagName === "BUTTON" ||
+        target.closest(".day-todo-actions") ||
+        target.closest("input[type='checkbox']")
+      ) {
+        return;
+      }
       selectedDateStr = dateStr;
       updateSelectedDateText();
       renderCalendar();
